@@ -331,7 +331,7 @@
             color: #495057;
         }
 
-        /* --- NEW STYLES: Thumbnail and Modal --- */
+        /* --- Thumbnail and Modal Styles --- */
 
         .certificate-image-container {
             text-align: center;
@@ -339,15 +339,13 @@
             margin-bottom: 1rem;
         }
 
-        /* FIX 1: Set a maximum size for the images inside the container by default */
         .certificate-image-container img {
-            max-width: 100%; /* Default max width to prevent overflow */
+            max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
         }
         
-        /* Apply explicit thumbnail styling to the wrapper div */
         .certificate-thumbnail {
             cursor: pointer;
             display: inline-block;
@@ -355,7 +353,6 @@
             border-radius: 8px;
             border: 2px solid #dee2e6;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            /* Explicitly set max size for the thumbnail area */
             max-width: 250px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
@@ -365,7 +362,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        /* The actual image inside the thumbnail should respect its container size */
         .certificate-thumbnail img {
             width: 100%;
             height: auto;
@@ -392,7 +388,7 @@
             width: 90%;
             max-width: 900px;
             max-height: 90%;
-            object-fit: contain; /* Ensures the whole image fits */
+            object-fit: contain;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -400,9 +396,9 @@
             border-radius: 10px;
         }
 
-        /* UPDATED: Close Button Styling */
+        /* Close Button Styling */
         .close {
-            position: fixed; /* Use fixed for better positioning */
+            position: fixed;
             top: 20px;
             right: 20px;
             color: #fff;
@@ -411,26 +407,108 @@
             transition: 0.3s;
             cursor: pointer;
             user-select: none;
-            /* Make it look like a button/icon */
-            background: rgba(44, 62, 80, 0.7); /* Darker background */
+            background: rgba(44, 62, 80, 0.7);
             border-radius: 50%;
-            line-height: 40px; /* Center the 'x' vertically */
+            line-height: 40px;
             width: 40px;
             height: 40px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            z-index: 1001; /* Ensure it's above the image */
+            z-index: 1001;
         }
 
         .close:hover,
         .close:focus {
-            color: #f8f9fa; /* Lighter on hover */
-            background: rgba(102, 126, 234, 0.8); /* Highlight color */
+            color: #f8f9fa;
+            background: rgba(102, 126, 234, 0.8);
             text-decoration: none;
         }
         
         @keyframes fadeInModal {
             from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Carousel Styles --- */
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width for the reel container */
+            margin: 0 auto 2rem;
+            background: #e9ecef;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 2px solid #dee2e6;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Standard aspect ratio for photos */
+            background-color: #f1f1f1;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: slideFadeIn 0.5s ease-out;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .carousel-nav-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 12px 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(44, 62, 80, 0.5);
+            border: none;
+            z-index: 10;
+        }
+
+        .carousel-nav-btn:hover {
+            background-color: rgba(102, 126, 234, 0.8);
+        }
+
+        .prev-btn {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .next-btn {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        @keyframes slideFadeIn {
+            from { opacity: 0.8; }
             to { opacity: 1; }
         }
 
@@ -507,6 +585,7 @@
                     <li><a href="#awards" class="nav-link" onclick="showSection('awards', this)">Awards & Recognition</a></li>
                     <li><a href="#research" class="nav-link" onclick="showSection('research', this)">Research & Learning</a></li>
                     <li><a href="#education" class="nav-link" onclick="showSection('education', this)">Education</a></li>
+                    <li><a href="#photoreel" class="nav-link" onclick="showSection('photoreel', this)">Photo Gallery</a></li>
                 </ul>
             </nav>
 
@@ -578,7 +657,7 @@
                             <span class="skill-item">Photography</span>
                             <span class="skill-item">Creative Design</span>
                             <span class="skill-item">Visual Arts</span>
-                            <span class="skill-item">Content Creation</span>
+                            <span class="tag">Content Creation</span>
                         </div>
                     </div>
                 </div>
@@ -681,8 +760,8 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Awards Section (UPDATED) -->
+            
+            <!-- Awards Section -->
             <section id="awards-section" class="content-section">
                 <div class="section-header">
                     <h1>Awards & Recognition</h1>
@@ -713,6 +792,56 @@
                         <span class="tag">College Board</span>
                     </div>
                 </div>
+				<div class="content-card certificate-card">
+                    <h3 class="card-title">AI SCHOLARS PROGRAM </h3>
+                    <p class="card-subtitle">INSPIRIT AI</p>
+                    <div class="card-meta">
+                        <span>🏆 Certificate of Accomplishment</span>
+                        <span>📅 Summer 2025</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('inspirit-ai-scholars.jpg')">
+                            <!-- REMOVED inline onerror -->
+                            <img src="inspirit-ai-scholars.jpg" alt="Certificate of Accomplishment from INSPIRIT AI thumbnail" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Awarded for successful completion of the "INSPIRIT AI, SCHOLARS" program with Capstone project, exploring AI and its usages.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Coding</span>                        
+                    </div>
+                </div>							
+                <!-- MOVED CARD: AI Embeddings -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">INTRO TO AI EMBEDDINGS</h3>
+                    <p class="card-subtitle">ECE Continuum's Joy of Coding, University of Michigan</p>
+                    <div class="card-meta">
+                        <span>🏆 Certificate of Accomplishment</span>
+                        <span>📅 Summer 2025</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-ai-embeddings-certificate.jpg')">
+                            <!-- REMOVED inline onerror -->
+                            <img src="joy-of-coding-ai-embeddings-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, AI Embeddings thumbnail" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Awarded for successful completion of the "Intro to AI Embeddings" module, exploring how AI models represent complex data.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Coding</span>
+                        <span class="tag">University of Michigan</span>
+                    </div>
+                </div>				
 
                 <!-- 2. Joy of Coding: Data Visualization Certificate -->
                 <div class="content-card certificate-card">
@@ -789,37 +918,7 @@
                         <span class="tag">University of Michigan</span>
                     </div>
                 </div>
-
-                <div class="content-card">
-                    <h3 class="card-title">Academic Honor Roll</h3>
-                    <p class="card-subtitle">Grade 8 Academic Excellence</p>
-                    <div class="card-meta">
-                        <span>🏆 Academic Achievement</span>
-                    </div>
-                    <p class="card-description">
-                        Recognized for outstanding academic performance and consistent excellence in studies. This achievement reflects dedication to learning and maintaining high academic standards.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Academic Excellence</span>
-                        <span class="tag">Recognition</span>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <h3 class="card-title">Leadership Recognition</h3>
-                    <p class="card-subtitle">Multiple Leadership Positions</p>
-                    <div class="card-meta">
-                        <span>🌟 Leadership Excellence</span>
-                    </div>
-                    <p class="card-description">
-                        Successfully founded and lead multiple organizations, demonstrating exceptional leadership capabilities across diverse fields including aerospace, education, and community service. Recognized for promoting STEM education and female empowerment.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Leadership</span>
-                        <span class="tag">Innovation</span>
-                        <span class="tag">Community Impact</span>
-                    </div>
-                </div>
+                
             </section>
 
             <!-- Research Section -->
@@ -917,6 +1016,35 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Photo Reel Section (MOVED TO END) -->
+            <section id="photoreel-section" class="content-section">
+                <div class="section-header">
+                    <h1>Photo Gallery</h1>
+                    <p>Visual highlights of hands-on projects, builds, and events.</p>
+                </div>
+                
+                <div class="content-card">
+                    <h3 class="card-title">Engineering Project Gallery</h3>
+                    <p class="card-subtitle">A collection of visuals from Aerospace and Space Travel Interest Group, School projects and other activites.</p>
+                                        
+                    <div class="carousel-container">
+                        <div id="carousel-slides">
+                            <!-- Slides will be injected here by JavaScript -->
+                        </div>
+                        <button class="carousel-nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+                        <button class="carousel-nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+                        <div class="slide-caption" id="slide-caption"></div>
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag">Engineering</span>
+                        <span class="tag">Robotics</span>
+                        <span class="tag">Mechatronics</span>
+                        <span class="tag">Visuals</span>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -927,6 +1055,77 @@
     </div>
 
     <script>
+        // --- Photo Reel Data and Logic ---
+        const projectImages = [
+            { src: 'photos/inspirit_ai_cohort.jpg', caption: 'INSPIRIT AI, SCHOLARS COHORT' },
+            { src: 'photos/inspirit_ai_instructors.jpg', caption: 'INSPIRIT AI, with Instructors' },
+            { src: 'photos/astc_club_meet.jpg', caption: 'Aerospace and Space Travel Club Meeting & Design Session' },
+			{ src: 'photos/astc_fire_activity.jpg', caption: 'Fire Activity, Aerospace and Space Travel Club Meeting' },
+            { src: 'photos/catapult.jpg', caption: 'Catapult, AP Physics project' },
+			{ src: 'photos/catapult_run.gif', caption: 'Catapult Demo, AP Physics project' },
+            // *** Add new images here ***
+            // Example: { src: 'photos/new_project_photo.jpg', caption: 'New Project: Solar Panel Array Testing' },
+        ];
+        let currentSlideIndex = 0;
+
+        function renderSlides() {
+            const container = document.getElementById('carousel-slides');
+            const captionElement = document.getElementById('slide-caption');
+            
+            // Check if the current section is 'photoreel' before rendering
+            if (document.getElementById('photoreel-section').classList.contains('active')) {
+                if (!container || projectImages.length === 0) return;
+
+                container.innerHTML = '';
+                
+                projectImages.forEach((img, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.setAttribute('data-index', index);
+                    
+                    const imageElement = document.createElement('img');
+                    imageElement.src = img.src;
+                    imageElement.alt = img.caption;
+                    
+                    slide.appendChild(imageElement);
+                    container.appendChild(slide);
+                });
+                
+                // Initial display setup
+                showSlide(currentSlideIndex);
+            }
+        }
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('#photoreel-section .carousel-slide');
+            const captionElement = document.getElementById('slide-caption');
+            
+            if (slides.length === 0) {
+                if (captionElement) captionElement.textContent = "No images found. Please check 'projectImages' array.";
+                return;
+            }
+
+            // Wrap index around
+            if (n >= slides.length) { currentSlideIndex = 0 }    
+            if (n < 0) { currentSlideIndex = slides.length - 1 }
+
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            // Show current slide
+            slides[currentSlideIndex].classList.add('active');
+            
+            // Update caption
+            captionElement.textContent = projectImages[currentSlideIndex].caption;
+        }
+
+        function changeSlide(n) {
+            currentSlideIndex += n;
+            showSlide(currentSlideIndex);
+        }
+
+        // --- Portfolio Navigation and Modal Logic ---
+
         function showSection(sectionId, linkElement) {
             // Hide all sections
             const sections = document.querySelectorAll('.content-section');
@@ -941,6 +1140,12 @@
             
             // Add active class to clicked link
             linkElement.classList.add('active');
+
+            // If navigating to the photo reel section, ensure the carousel renders
+            if (sectionId === 'photoreel') {
+                // Delay rendering slightly to ensure the section is visible
+                setTimeout(renderSlides, 100); 
+            }
         }
 
         const modal = document.getElementById('image-modal');
@@ -977,6 +1182,11 @@
 
         // Smooth scroll effect for better user experience
         document.addEventListener('DOMContentLoaded', function() {
+            // Check the initially active section to render slides if needed
+            if (document.getElementById('photoreel-section').classList.contains('active')) {
+                renderSlides(); 
+            }
+            
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
