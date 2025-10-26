@@ -331,6 +331,109 @@
             color: #495057;
         }
 
+        /* --- NEW STYLES: Thumbnail and Modal --- */
+
+        .certificate-image-container {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* FIX 1: Set a maximum size for the images inside the container by default */
+        .certificate-image-container img {
+            max-width: 100%; /* Default max width to prevent overflow */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Apply explicit thumbnail styling to the wrapper div */
+        .certificate-thumbnail {
+            cursor: pointer;
+            display: inline-block;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            /* Explicitly set max size for the thumbnail area */
+            max-width: 250px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .certificate-thumbnail:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* The actual image inside the thumbnail should respect its container size */
+        .certificate-thumbnail img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeInModal 0.3s;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90%;
+            object-fit: contain; /* Ensures the whole image fits */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        /* UPDATED: Close Button Styling */
+        .close {
+            position: fixed; /* Use fixed for better positioning */
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            user-select: none;
+            /* Make it look like a button/icon */
+            background: rgba(44, 62, 80, 0.7); /* Darker background */
+            border-radius: 50%;
+            line-height: 40px; /* Center the 'x' vertically */
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1001; /* Ensure it's above the image */
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f8f9fa; /* Lighter on hover */
+            background: rgba(102, 126, 234, 0.8); /* Highlight color */
+            text-decoration: none;
+        }
+        
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .portfolio-container {
@@ -364,6 +467,19 @@
             .card-meta {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .close {
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+                line-height: 30px;
+                width: 30px;
+                height: 30px;
             }
         }
 
@@ -566,13 +682,14 @@
                 </div>
             </section>
 
-            <!-- Awards Section -->
+            <!-- Awards Section (UPDATED) -->
             <section id="awards-section" class="content-section">
                 <div class="section-header">
                     <h1>Awards & Recognition</h1>
                     <p>Acknowledgment of academic excellence and leadership</p>
                 </div>
 
+                <!-- 1. AP Scholar with Honor Award -->
                 <div class="content-card certificate-card">
                     <h3 class="card-title">AP Scholar with Honor Award</h3>
                     <p class="card-subtitle">College Board</p>
@@ -580,11 +697,15 @@
                         <span>🏆 Award for Academic Achievement</span>
                         <span>📅 July 03, 2025</span>
                     </div>
+                    <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
-                        <img src="ap-scholar-award.jpg" alt="AP Scholar with Honor Award certificate" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #dee2e6;">
+                        <div class="certificate-thumbnail" onclick="openModal('ap-scholar-award.jpg')">
+                            <img src="ap-scholar-award.jpg" alt="AP Scholar with Honor Award certificate thumbnail" style="width: 100%; height: auto;">
+                        </div>
                     </div>
+                    <!-- END THUMBNAIL WRAPPER -->
                     <p class="card-description" style="margin-top: 1rem;">
-                        [cite_start]Recognizes exemplary college-level achievement for attaining an average score of at least 3.25 on all AP Exams taken, and scores of 3 or higher on four or more exams[cite: 36, 37].
+                        Recognizes exemplary college-level achievement for attaining an average score of at least 3.25 on all AP Exams taken, and scores of 3 or higher on four or more exams.
                     </p>
                     <div class="tags">
                         <span class="tag">Academic Excellence</span>
@@ -593,6 +714,7 @@
                     </div>
                 </div>
 
+                <!-- 2. Joy of Coding: Data Visualization Certificate -->
                 <div class="content-card certificate-card">
                     <h3 class="card-title">INTRO TO DATA VISUALIZATION AND CORRELATION SCREENING</h3>
                     <p class="card-subtitle">ECE Continuum's Joy of Coding, University of Michigan</p>
@@ -600,9 +722,13 @@
                         <span>🏆 Certificate of Accomplishment</span>
                         <span>📅 Summer 2025</span>
                     </div>
+                    <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
-                        <img src="joy-of-coding-dataviz-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Data Visualization" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #dee2e6;">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-dataviz-certificate.jpg')">
+                            <img src="joy-of-coding-dataviz-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Data Visualization thumbnail" style="width: 100%; height: auto;">
+                        </div>
                     </div>
+                    <!-- END THUMBNAIL WRAPPER -->
                     <p class="card-description" style="margin-top: 1rem;">
                         Awarded for successful completion of the "Intro to Data Visualization and Correlation Screening" module.
                     </p>
@@ -613,6 +739,7 @@
                     </div>
                 </div>
 
+                <!-- 3. Joy of Coding: Metacognitive Practices Certificate -->
                 <div class="content-card certificate-card">
                     <h3 class="card-title">METACOGNITIVE PRACTICES IN CODING</h3>
                     <p class="card-subtitle">ECE Continuum's Joy of Coding, University of Michigan</p>
@@ -620,11 +747,15 @@
                         <span>🏆 Certificate of Accomplishment</span>
                         <span>📅 Summer 2024</span>
                     </div>
+                    <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
-                        <img src="joy-of-coding-metacognitive-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Metacognitive Practices" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #dee2e6;">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-metacognitive-certificate.jpg')">
+                            <img src="joy-of-coding-metacognitive-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Metacognitive Practices thumbnail" style="width: 100%; height: auto;">
+                        </div>
                     </div>
+                    <!-- END THUMBNAIL WRAPPER -->
                     <p class="card-description" style="margin-top: 1rem;">
-                        [cite_start]Awarded for successful completion of the **"Metacognitive Practices in Coding"** module from the ECE Continuum's Joy of Coding course[cite: 23].
+                        Awarded for successful completion of the **"Metacognitive Practices in Coding"** module from the ECE Continuum's Joy of Coding course.
                     </p>
                     <div class="tags">
                         <span class="tag">Metacognition</span>
@@ -634,6 +765,7 @@
                     </div>
                 </div>
 
+                <!-- 4. Joy of Coding: Course Completion Certificate -->
                 <div class="content-card certificate-card">
                     <h3 class="card-title">Joy of Coding Course Completion</h3>
                     <p class="card-subtitle">ECE Continuum, University of Michigan</p>
@@ -641,11 +773,15 @@
                         <span>🏆 Certificate of Accomplishment</span>
                         <span>📅 Summer 2024</span>
                     </div>
+                    <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
-                        <img src="joy-of-coding-completion-certificate.jpg" alt="Certificate of Accomplishment for ECE Continuum's Joy of Coding course completion" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #dee2e6;">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-completion-certificate.jpg')">
+                            <img src="joy-of-coding-completion-certificate.jpg" alt="Certificate of Accomplishment for ECE Continuum's Joy of Coding course completion thumbnail" style="width: 100%; height: auto;">
+                        </div>
                     </div>
+                    <!-- END THUMBNAIL WRAPPER -->
                     <p class="card-description" style="margin-top: 1rem;">
-                        [cite_start]Certified completion of the entire **ECE Continuum's Joy of Coding Summer 2024 course** at the University of Michigan[cite: 49].
+                        Certified completion of the entire **ECE Continuum's Joy of Coding Summer 2024 course** at the University of Michigan.
                     </p>
                     <div class="tags">
                         <span class="tag">Course Completion</span>
@@ -653,22 +789,35 @@
                         <span class="tag">University of Michigan</span>
                     </div>
                 </div>
+
                 <div class="content-card">
-                    <h3 class="card-title">College of Engineering and Women in Engineering</h3>
-                    <p class="card-subtitle">Michigan State University</p>
+                    <h3 class="card-title">Academic Honor Roll</h3>
+                    <p class="card-subtitle">Grade 8 Academic Excellence</p>
                     <div class="card-meta">
-                        <span>📅 Spring 2024</span>
-                        <span>📍 Michigan</span>
-                        <span>💻 JavaScript Programming</span>
+                        <span>🏆 Academic Achievement</span>
                     </div>
                     <p class="card-description">
-                        The JavaScript based learning program to develop coding skills and design creative programs using geometric shapes. This program focused on both technical skill development and encouraging women's participation in engineering fields.
+                        Recognized for outstanding academic performance and consistent excellence in studies. This achievement reflects dedication to learning and maintaining high academic standards.
                     </p>
                     <div class="tags">
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Creative Programming</span>
-                        <span class="tag">Geometric Design</span>
-                        <span class="tag">Women in Engineering</span>
+                        <span class="tag">Academic Excellence</span>
+                        <span class="tag">Recognition</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Leadership Recognition</h3>
+                    <p class="card-subtitle">Multiple Leadership Positions</p>
+                    <div class="card-meta">
+                        <span>🌟 Leadership Excellence</span>
+                    </div>
+                    <p class="card-description">
+                        Successfully founded and lead multiple organizations, demonstrating exceptional leadership capabilities across diverse fields including aerospace, education, and community service. Recognized for promoting STEM education and female empowerment.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Innovation</span>
+                        <span class="tag">Community Impact</span>
                     </div>
                 </div>
             </section>
@@ -698,7 +847,27 @@
                         <span class="tag">University of Michigan</span>
                     </div>
                 </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">College of Engineering and Women in Engineering</h3>
+                    <p class="card-subtitle">Michigan State University</p>
+                    <div class="card-meta">
+                        <span>📅 Spring 2024</span>
+                        <span>📍 Michigan</span>
+                        <span>💻 JavaScript Programming</span>
+                    </div>
+                    <p class="card-description">
+                        The JavaScript based learning program to develop coding skills and design creative programs using geometric shapes. This program focused on both technical skill development and encouraging women's participation in engineering fields.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Creative Programming</span>
+                        <span class="tag">Geometric Design</span>
+                        <span class="tag">Women in Engineering</span>
+                    </div>
+                </div>
             </section>
+
 
             <!-- Education Section -->
             <section id="education-section" class="content-section">
@@ -751,6 +920,12 @@
         </div>
     </div>
 
+    <!-- The Modal (Lightbox) Structure -->
+    <div id="image-modal" class="modal" onclick="closeModal(event)">
+        <span class="close" title="Close Modal">&times;</span>
+        <img class="modal-content" id="modal-image" alt="Full size certificate image">
+    </div>
+
     <script>
         function showSection(sectionId, linkElement) {
             // Hide all sections
@@ -768,14 +943,47 @@
             linkElement.classList.add('active');
         }
 
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+
+        function openModal(imageSrc) {
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+            // Prevents background scrolling when modal is open
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal(event) {
+             // Only close the modal if the click event is undefined (e.g., from keydown) or if the click target is the modal background or the close button.
+            if (!event || event.target === modal || event.target.className === 'close') {
+                modal.style.display = "none";
+                // Re-enables background scrolling
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+        
+        // Listener for the close icon/button
+        document.querySelector('.close').addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevents the click from bubbling up to the modal container
+            closeModal(e);
+        });
+
+        // Close the modal when ESC is pressed
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && modal.style.display === "block") {
+                closeModal();
+            }
+        });
+
         // Smooth scroll effect for better user experience
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const targetSection = this.getAttribute('onclick').match(/'(\w+)'/)[1];
-                    showSection(targetSection, this);
+                    // Fixes the smooth scroll logic to correctly get the section ID
+                    const targetSectionId = this.getAttribute('href').substring(1); 
+                    showSection(targetSectionId, this);
                 });
             });
         });
