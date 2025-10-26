@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aakriti Kumar - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .portfolio-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-title {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .profile-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .nav-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-menu a.active {
+            background: rgba(255,255,255,0.2);
+            border-left: 3px solid #667eea;
+        }
+
+        /* Contact Info */
+        .contact-section {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .contact-item span:first-child {
+            font-size: 1.2rem;
+        }
+
+        .contact-item span:last-child {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            border-left: 5px solid #667eea;
+            padding-left: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.05), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .content-card:hover::before {
+            width: 100%;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card-description {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* About Section Specific */
+        .about-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border: 1px solid #dee2e6;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: border-color 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: #667eea;
+        }
+
+        .skill-category h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-item {
+            background: #e9ecef;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        /* --- NEW STYLES: Thumbnail and Modal --- */
+
+        .certificate-image-container {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .certificate-thumbnail {
+            cursor: pointer;
+            display: inline-block;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .certificate-thumbnail:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .certificate-thumbnail img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeInModal 0.3s;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90%;
+            object-fit: contain; /* Ensures the whole image fits */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        /* UPDATED: Close Button Styling */
+        .close {
+            position: fixed; /* Use fixed for better positioning */
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            user-select: none;
+            /* Make it look like a button/icon */
+            background: rgba(44, 62, 80, 0.7); /* Darker background */
+            border-radius: 50%;
+            line-height: 40px; /* Center the 'x' vertically */
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1001; /* Ensure it's above the image */
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f8f9fa; /* Lighter on hover */
+            background: rgba(102, 126, 234, 0.8); /* Highlight color */
+            text-decoration: none;
+        }
+        
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .portfolio-container {
+                grid-template-columns: 300px 1fr;
+            }
+            
+            .main-content {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                height: auto;
+                padding: 1.5rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+            
+            .section-header h1 {
+                font-size: 2rem;
+            }
+            
+            .card-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .close {
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+                line-height: 30px;
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-img">AK</div>
+                <h2 class="profile-name">Aakriti Kumar</h2>
+                <p class="profile-title">Aspiring Aerospace Engineer</p>
+                <p class="profile-subtitle">Novi High School | Class of 2026</p>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#about" class="nav-link active" onclick="showSection('about', this)">About Me</a></li>
+                    <li><a href="#projects" class="nav-link" onclick="showSection('projects', this)">Projects</a></li>
+                    <li><a href="#awards" class="nav-link" onclick="showSection('awards', this)">Awards & Recognition</a></li>
+                    <li><a href="#research" class="nav-link" onclick="showSection('research', this)">Research & Learning</a></li>
+                    <li><a href="#education" class="nav-link" onclick="showSection('education', this)">Education</a></li>
+                </ul>
+            </nav>
+
+            <div class="contact-section">
+                <h3>Contact Information</h3>
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>aakritifirst@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Novi, MI</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- About Section -->
+            <section id="about-section" class="content-section active">
+                <div class="section-header">
+                    <h1>About Me</h1>
+                    <p>Passionate about aerospace engineering and making a difference through STEM education</p>
+                </div>
+
+                <div class="about-intro">
+                    <p>A creative and analytical student with a keen eye for detail and a passion for learning. Quick to grasp new concepts and self-motivated. Highly observant and adaptable, thriving in dynamic academic environments.</p>
+                    <br>
+                    <p>Aspiring aerospace engineering student with a strong enthusiasm for acquiring a broad range of skills and knowledge in the engineering field. Eager to contribute to innovative projects and develop a comprehensive understanding of engineering principles and practices.</p>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>🚀 Interests</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Aerospace Engineering</span>
+                            <span class="skill-item">Space Exploration</span>
+                            <span class="skill-item">STEM Education</span>
+                            <span class="skill-item">Female Empowerment</span>
+                            <span class="skill-item">Robotics</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>💻 Technical Skills</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Python Programming</span>
+                            <span class="skill-item">JavaScript</span>
+                            <span class="skill-item">Robotics Programming</span>
+                            <span class="skill-item">App Development</span>
+                            <span class="skill-item">Mechatronics</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>🎯 Leadership</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Club Founding</span>
+                            <span class="skill-item">Team Management</span>
+                            <span class="skill-item">Tutoring</span>
+                            <span class="skill-item">Public Speaking</span>
+                            <span class="skill-item">Community Outreach</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>🎨 Creative</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Photography</span>
+                            <span class="skill-item">Creative Design</span>
+                            <span class="skill-item">Visual Arts</span>
+                            <span class="skill-item">Content Creation</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects-section" class="content-section">
+                <div class="section-header">
+                    <h1>Projects & Leadership</h1>
+                    <p>Initiatives that combine passion with purpose</p>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Aerospace and Space Travel Club (ASTC)</h3>
+                    <p class="card-subtitle">Co-Founder & President</p>
+                    <div class="card-meta">
+                        <span>📅 November 2023 - Present</span>
+                        <span>📍 Novi High School, Novi MI</span>
+                    </div>
+                    <p class="card-description">
+                        Aerospace and Space Travel Club is about learning and exploring the process that goes behind space exploration as it pertains to STEM. The club also promotes female empowerment in a predominantly male STEM job force, encouraging more young women to pursue careers in aerospace and related fields.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Aerospace</span>
+                        <span class="tag">STEM Advocacy</span>
+                        <span class="tag">Female Empowerment</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">San Antonio Math Include (SaMi)</h3>
+                    <p class="card-subtitle">Chapter Director & Tutor</p>
+                    <div class="card-meta">
+                        <span>📅 June 2023 - Present</span>
+                        <span>📍 Online (International)</span>
+                    </div>
+                    <p class="card-description">
+                        SaMi is an international nonprofit organization founded by students passionate about providing greater access to STEM education to all students from different backgrounds, experiences, and cultural perspectives. As Chapter Director, I lead tutoring initiatives and coordinate educational outreach programs.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Nonprofit Leadership</span>
+                        <span class="tag">STEM Education</span>
+                        <span class="tag">Tutoring</span>
+                        <span class="tag">Global Impact</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Automated Amphibians Robotics</h3>
+                    <p class="card-subtitle">Programmer</p>
+                    <div class="card-meta">
+                        <span>📅 September 2023 - March 2024</span>
+                        <span>📍 Novi High School, Novi MI</span>
+                    </div>
+                    <p class="card-description">
+                        Automated Amphibians is a FIRST Robotics team based in Novi, MI. This club prepares young people for the future through a suite of life-changing youth robotics programs that build skills, confidence, and resilience. Contributed as a programmer, developing solutions for complex robotics challenges.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">FIRST Robotics</span>
+                        <span class="tag">Programming</span>
+                        <span class="tag">Team Collaboration</span>
+                        <span class="tag">Problem Solving</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Dear Asian Youth Novi (DAYN)</h3>
+                    <p class="card-subtitle">Creative Member</p>
+                    <div class="card-meta">
+                        <span>📅 June 2024 - Present</span>
+                        <span>📍 Novi High School, Novi MI</span>
+                    </div>
+                    <p class="card-description">
+                        Dear Asian Youth Novi is an extension of a community organization named Dear Asian Youth. This club is an advocacy-based organization where Asian students and allies acknowledge, celebrate, and advocate for change in their communities.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Advocacy</span>
+                        <span class="tag">Community Service</span>
+                        <span class="tag">Cultural Awareness</span>
+                        <span class="tag">Creative Content</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Photography Interest Group</h3>
+                    <p class="card-subtitle">Secretary</p>
+                    <div class="card-meta">
+                        <span>📅 June 2024 - Present</span>
+                        <span>📍 Novi High School, Novi MI</span>
+                    </div>
+                    <p class="card-description">
+                        Photography Interest Group is a community dedicated to exploring the art and techniques of photography, focusing on how images can capture and preserve meaningful moments. As Secretary, I help coordinate group activities and maintain organizational records.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Photography</span>
+                        <span class="tag">Visual Arts</span>
+                        <span class="tag">Creative Expression</span>
+                        <span class="tag">Organization</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Awards Section (UPDATED) -->
+            <section id="awards-section" class="content-section">
+                <div class="section-header">
+                    <h1>Awards & Recognition</h1>
+                    <p>Acknowledgment of academic excellence and leadership</p>
+                </div>
+
+                <!-- 1. AP Scholar with Honor Award -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">AP Scholar with Honor Award</h3>
+                    <p class="card-subtitle">College Board</p>
+                    <div class="card-meta">
+                        <span>🏆 Award for Academic Achievement</span>
+                        <span>📅 July 03, 2025</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('ap-scholar-award.jpg')">
+                            <img src="ap-scholar-award.jpg" alt="AP Scholar with Honor Award certificate thumbnail" style="width: 250px; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Recognizes exemplary college-level achievement for attaining an average score of at least 3.25 on all AP Exams taken, and scores of 3 or higher on four or more exams.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Academic Excellence</span>
+                        <span class="tag">Advanced Placement</span>
+                        <span class="tag">College Board</span>
+                    </div>
+                </div>
+
+                <!-- 2. Joy of Coding: Data Visualization Certificate -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">INTRO TO DATA VISUALIZATION AND CORRELATION SCREENING</h3>
+                    <p class="card-subtitle">ECE Continuum's Joy of Coding, University of Michigan</p>
+                    <div class="card-meta">
+                        <span>🏆 Certificate of Accomplishment</span>
+                        <span>📅 Summer 2025</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-dataviz-certificate.jpg')">
+                            <img src="joy-of-coding-dataviz-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Data Visualization thumbnail" style="width: 250px; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Awarded for successful completion of the "Intro to Data Visualization and Correlation Screening" module.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Data Visualization</span>
+                        <span class="tag">Coding</span>
+                        <span class="tag">University of Michigan</span>
+                    </div>
+                </div>
+
+                <!-- 3. Joy of Coding: Metacognitive Practices Certificate -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">METACOGNITIVE PRACTICES IN CODING</h3>
+                    <p class="card-subtitle">ECE Continuum's Joy of Coding, University of Michigan</p>
+                    <div class="card-meta">
+                        <span>🏆 Certificate of Accomplishment</span>
+                        <span>📅 Summer 2024</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-metacognitive-certificate.jpg')">
+                            <img src="joy-of-coding-metacognitive-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Metacognitive Practices thumbnail" style="width: 250px; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Awarded for successful completion of the **"Metacognitive Practices in Coding"** module from the ECE Continuum's Joy of Coding course.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Metacognition</span>
+                        <span class="tag">Coding</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">University of Michigan</span>
+                    </div>
+                </div>
+
+                <!-- 4. Joy of Coding: Course Completion Certificate -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">Joy of Coding Course Completion</h3>
+                    <p class="card-subtitle">ECE Continuum, University of Michigan</p>
+                    <div class="card-meta">
+                        <span>🏆 Certificate of Accomplishment</span>
+                        <span>📅 Summer 2024</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-completion-certificate.jpg')">
+                            <img src="joy-of-coding-completion-certificate.jpg" alt="Certificate of Accomplishment for ECE Continuum's Joy of Coding course completion thumbnail" style="width: 250px; height: auto;">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        Certified completion of the entire **ECE Continuum's Joy of Coding Summer 2024 course** at the University of Michigan.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Course Completion</span>
+                        <span class="tag">Computer Engineering</span>
+                        <span class="tag">University of Michigan</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Academic Honor Roll</h3>
+                    <p class="card-subtitle">Grade 8 Academic Excellence</p>
+                    <div class="card-meta">
+                        <span>🏆 Academic Achievement</span>
+                    </div>
+                    <p class="card-description">
+                        Recognized for outstanding academic performance and consistent excellence in studies. This achievement reflects dedication to learning and maintaining high academic standards.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Academic Excellence</span>
+                        <span class="tag">Recognition</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Leadership Recognition</h3>
+                    <p class="card-subtitle">Multiple Leadership Positions</p>
+                    <div class="card-meta">
+                        <span>🌟 Leadership Excellence</span>
+                    </div>
+                    <p class="card-description">
+                        Successfully founded and lead multiple organizations, demonstrating exceptional leadership capabilities across diverse fields including aerospace, education, and community service. Recognized for promoting STEM education and female empowerment.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Innovation</span>
+                        <span class="tag">Community Impact</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Section -->
+            <section id="research-section" class="content-section">
+                <div class="section-header">
+                    <h1>Research & Learning</h1>
+                    <p>Expanding knowledge through specialized programs and courses</p>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">ECE Continuum's Joy of Coding</h3>
+                    <p class="card-subtitle">University of Michigan</p>
+                    <div class="card-meta">
+                        <span>📅 Summer 2024</span>
+                        <span>📍 Michigan</span>
+                        <span>💻 Python Programming</span>
+                    </div>
+                    <p class="card-description">
+                        The python-based course focused on how coding works behind popular apps and even lets students create their own Snapchat-like lenses. This intensive program provided hands-on experience in application development and computer vision technologies.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">App Development</span>
+                        <span class="tag">Computer Vision</span>
+                        <span class="tag">University of Michigan</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">College of Engineering and Women in Engineering</h3>
+                    <p class="card-subtitle">Michigan State University</p>
+                    <div class="card-meta">
+                        <span>📅 Spring 2024</span>
+                        <span>📍 Michigan</span>
+                        <span>💻 JavaScript Programming</span>
+                    </div>
+                    <p class="card-description">
+                        The JavaScript based learning program to develop coding skills and design creative programs using geometric shapes. This program focused on both technical skill development and encouraging women's participation in engineering fields.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Creative Programming</span>
+                        <span class="tag">Geometric Design</span>
+                        <span class="tag">Women in Engineering</span>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Education Section -->
+            <section id="education-section" class="content-section">
+                <div class="section-header">
+                    <h1>Education</h1>
+                    <p>Academic foundation and specialized coursework</p>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">High School Diploma (In Progress)</h3>
+                    <p class="card-subtitle">Novi High School</p>
+                    <div class="card-meta">
+                        <span>📅 September 2022 - Present</span>
+                        <span>📍 Novi, Michigan</span>
+                        <span>🎓 Class of 2026</span>
+                    </div>
+                    <p class="card-description">
+                        Currently pursuing high school education with a focus on engineering and advanced mathematics. Taking challenging courses that provide a strong foundation for future aerospace engineering studies.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Engineering Focus</span>
+                        <span class="tag">Advanced Mathematics</span>
+                        <span class="tag">STEM Preparation</span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="card-title">Advanced Engineering Coursework</h3>
+                    <p class="card-subtitle">Specialized STEM Courses</p>
+                    <div class="card-meta">
+                        <span>📚 Current Studies</span>
+                    </div>
+                    <div class="card-description">
+                        <p><strong>Core Engineering Courses:</strong></p>
+                        <ul style="margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6;">
+                            <li><strong>Mechatronics:</strong> Integration of mechanical, electrical, and computer engineering</li>
+                            <li><strong>AP Physics:</strong> Advanced placement physics preparing for college-level study</li>
+                            <li><strong>AP Calculus:</strong> Advanced mathematical foundations essential for engineering</li>
+                        </ul>
+                        <p>These courses provide essential knowledge and skills for pursuing aerospace engineering at the university level.</p>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Mechatronics</span>
+                        <span class="tag">AP Physics</span>
+                        <span class="tag">AP Calculus</span>
+                        <span class="tag">Engineering Prep</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- The Modal (Lightbox) Structure -->
+    <div id="image-modal" class="modal" onclick="closeModal(event)">
+        <span class="close" title="Close Modal">&times;</span>
+        <img class="modal-content" id="modal-image" alt="Full size certificate image">
+    </div>
+
+    <script>
+        function showSection(sectionId, linkElement) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId + '-section').classList.add('active');
+            
+            // Add active class to clicked link
+            linkElement.classList.add('active');
+        }
+
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+
+        function openModal(imageSrc) {
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+            // Prevents background scrolling when modal is open
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal(event) {
+             // NEW FIX: Only close the modal if the click event is undefined (e.g., from keydown) or if the click target is the modal background or the close button.
+            if (!event || event.target === modal || event.target.className === 'close') {
+                modal.style.display = "none";
+                // Re-enables background scrolling
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+        
+        // Listener for the close icon/button
+        document.querySelector('.close').addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevents the click from bubbling up to the modal container
+            closeModal(e);
+        });
+
+        // Close the modal when ESC is pressed
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && modal.style.display === "block") {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll effect for better user experience
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Fixes the smooth scroll logic to correctly get the section ID
+                    const targetSectionId = this.getAttribute('href').substring(1); 
+                    showSection(targetSectionId, this);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
