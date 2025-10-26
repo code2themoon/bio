@@ -339,6 +339,15 @@
             margin-bottom: 1rem;
         }
 
+        /* FIX 1: Set a maximum size for the images inside the container by default */
+        .certificate-image-container img {
+            max-width: 100%; /* Default max width to prevent overflow */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Apply explicit thumbnail styling to the wrapper div */
         .certificate-thumbnail {
             cursor: pointer;
             display: inline-block;
@@ -346,6 +355,9 @@
             border-radius: 8px;
             border: 2px solid #dee2e6;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            /* Explicitly set max size for the thumbnail area */
+            max-width: 250px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .certificate-thumbnail:hover {
@@ -353,8 +365,9 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
+        /* The actual image inside the thumbnail should respect its container size */
         .certificate-thumbnail img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
             display: block;
         }
@@ -687,7 +700,7 @@
                     <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
                         <div class="certificate-thumbnail" onclick="openModal('ap-scholar-award.jpg')">
-                            <img src="ap-scholar-award.jpg" alt="AP Scholar with Honor Award certificate thumbnail" style="width: 250px; height: auto;">
+                            <img src="ap-scholar-award.jpg" alt="AP Scholar with Honor Award certificate thumbnail" style="width: 100%; height: auto;">
                         </div>
                     </div>
                     <!-- END THUMBNAIL WRAPPER -->
@@ -712,7 +725,7 @@
                     <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
                         <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-dataviz-certificate.jpg')">
-                            <img src="joy-of-coding-dataviz-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Data Visualization thumbnail" style="width: 250px; height: auto;">
+                            <img src="joy-of-coding-dataviz-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Data Visualization thumbnail" style="width: 100%; height: auto;">
                         </div>
                     </div>
                     <!-- END THUMBNAIL WRAPPER -->
@@ -737,7 +750,7 @@
                     <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
                         <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-metacognitive-certificate.jpg')">
-                            <img src="joy-of-coding-metacognitive-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Metacognitive Practices thumbnail" style="width: 250px; height: auto;">
+                            <img src="joy-of-coding-metacognitive-certificate.jpg" alt="Certificate of Accomplishment from ECE Continuum's Joy of Coding, Metacognitive Practices thumbnail" style="width: 100%; height: auto;">
                         </div>
                     </div>
                     <!-- END THUMBNAIL WRAPPER -->
@@ -763,7 +776,7 @@
                     <!-- THUMBNAIL WRAPPER -->
                     <div class="certificate-image-container">
                         <div class="certificate-thumbnail" onclick="openModal('joy-of-coding-completion-certificate.jpg')">
-                            <img src="joy-of-coding-completion-certificate.jpg" alt="Certificate of Accomplishment for ECE Continuum's Joy of Coding course completion thumbnail" style="width: 250px; height: auto;">
+                            <img src="joy-of-coding-completion-certificate.jpg" alt="Certificate of Accomplishment for ECE Continuum's Joy of Coding course completion thumbnail" style="width: 100%; height: auto;">
                         </div>
                     </div>
                     <!-- END THUMBNAIL WRAPPER -->
@@ -941,7 +954,7 @@
         }
 
         function closeModal(event) {
-             // NEW FIX: Only close the modal if the click event is undefined (e.g., from keydown) or if the click target is the modal background or the close button.
+             // Only close the modal if the click event is undefined (e.g., from keydown) or if the click target is the modal background or the close button.
             if (!event || event.target === modal || event.target.className === 'close') {
                 modal.style.display = "none";
                 // Re-enables background scrolling
