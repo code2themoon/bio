@@ -396,6 +396,22 @@
             border-radius: 10px;
         }
 
+        /* PDF Modal Styles */
+        .pdf-modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            height: 90%; /* Use height for PDF viewer */
+            max-width: 1000px; /* A bit wider for PDFs */
+            background: #fff; /* White background for the iframe */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #777;
+            border-radius: 10px;
+        }
+
         /* Close Button Styling */
         .close {
             position: fixed;
@@ -549,6 +565,11 @@
 
             .modal-content {
                 width: 95%;
+            }
+
+            .pdf-modal-content {
+                width: 95%;
+                height: 85%; /* Adjust height for mobile */
             }
 
             .close {
@@ -928,6 +949,35 @@
                     <p>Expanding knowledge through specialized programs and courses</p>
                 </div>
 
+                <!-- NEW Research Paper Card -->
+                <div class="content-card certificate-card">
+                    <h3 class="card-title">Technological Advancements for Combating Space Debris</h3>
+                    <p class="card-subtitle">Independent Research Paper</p>
+                    <div class="card-meta">
+                        <span>📅 2025</span>
+                        <span>📄 Research Paper</span>
+                    </div>
+                    <!-- THUMBNAIL WRAPPER -->
+                    <div class="certificate-image-container">
+                        <!-- This thumbnail opens the PDF modal -->
+                        <div class="certificate-thumbnail" onclick="openPdfModal('research/space-debris-paper.pdf')">
+                            <!-- Using a placeholder image. Replace 'src' with your thumbnail path -->
+                            <img src="photos/space-debris.jpg" alt="Research paper thumbnail" style="width: 100%; height: auto;" onerror="this.parentElement.style.display='none'; this.parentElement.parentElement.querySelector('.card-description').style.marginTop = '0';">
+                        </div>
+                    </div>
+                    <!-- END THUMBNAIL WRAPPER -->
+                    <p class="card-description" style="margin-top: 1rem;">
+                        An in-depth research paper analyzing current and emerging technologies designed to mitigate the growing problem of orbital space debris.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Research</span>
+                        <span class="tag">Aerospace</span>
+                        <span class="tag">Space Debris</span>
+                        <span class="tag">Engineering</span>
+                    </div>
+                </div>
+                <!-- END NEW Card -->
+
                 <div class="content-card">
                     <h3 class="card-title">ECE Continuum's Joy of Coding</h3>
                     <p class="card-subtitle">University of Michigan</p>
@@ -1048,10 +1098,16 @@
         </div>
     </div>
 
-    <!-- The Modal (Lightbox) Structure -->
+    <!-- The Image Modal (Lightbox) Structure -->
     <div id="image-modal" class="modal" onclick="closeModal(event)">
-        <span class="close" title="Close Modal">&times;</span>
+        <span class="close" id="image-modal-close" title="Close Modal">&times;</span>
         <img class="modal-content" id="modal-image" alt="Full size certificate image">
+    </div>
+
+    <!-- The PDF Modal (Lightbox) Structure -->
+    <div id="pdf-modal" class="modal" onclick="closePdfModal(event)">
+        <span class="close" id="pdf-modal-close" title="Close PDF">&times;</span>
+        <iframe class="pdf-modal-content" id="pdf-iframe" src="" frameborder="0"></iframe>
     </div>
 
     <script>
@@ -1160,23 +1216,58 @@
 
         function closeModal(event) {
              // Only close the modal if the click event is undefined (e.g., from keydown) or if the click target is the modal background or the close button.
-            if (!event || event.target === modal || event.target.className === 'close') {
+            if (!event || event.target === modal || event.target.id === 'image-modal-close') {
                 modal.style.display = "none";
                 // Re-enables background scrolling
                 document.body.style.overflow = 'auto'; 
             }
         }
+
+        // --- PDF Modal Logic ---
+        const pdfModal = document.getElementById('pdf-modal');
+        const pdfIframe = document.getElementById('pdf-iframe');
+
+        function openPdfModal(pdfSrc) {
+            if (pdfModal && pdfIframe) {
+                pdfModal.style.display = "block";
+                pdfIframe.src = pdfSrc;
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        function closePdfModal(event) {
+            // Close if click is on modal background or the close button, or if no event (ESC key)
+            if (!event || event.target === pdfModal || event.target.id === 'pdf-modal-close') {
+                if (pdfModal && pdfIframe) {
+                    pdfModal.style.display = "none";
+                    pdfIframe.src = ""; // Clear src to stop PDF loading
+                    document.body.style.overflow = 'auto'; 
+                }
+            }
+        }
         
         // Listener for the close icon/button
-        document.querySelector('.close').addEventListener('click', function(e) {
+        document.getElementById('image-modal-close').addEventListener('click', function(e) {
             e.stopPropagation(); // Prevents the click from bubbling up to the modal container
             closeModal(e);
         });
 
-        // Close the modal when ESC is pressed
+        // Listener for the PDF modal close icon/button
+        document.getElementById('pdf-modal-close').addEventListener('click', function(e) {
+            e.stopPropagation();
+            closePdfModal(e);
+        });
+
+
+        // Close the modals when ESC is pressed
         document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape" && modal.style.display === "block") {
-                closeModal();
+            if (e.key === "Escape") {
+                if (modal.style.display === "block") {
+                    closeModal(); // Pass no event
+                }
+                if (pdfModal.style.display === "block") {
+                    closePdfModal(); // Pass no event
+                }
             }
         });
 
@@ -1200,3 +1291,4 @@
     </script>
 </body>
 </html>
+
