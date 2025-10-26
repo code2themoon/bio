@@ -225,6 +225,7 @@
             height: 100%;
             background: linear-gradient(90deg, rgba(102, 126, 234, 0.05), transparent);
             transition: width 0.3s ease;
+            z-index: 0; /* Ensures this layer is behind the content */
         }
 
         .content-card:hover {
@@ -264,11 +265,53 @@
             margin-bottom: 1rem;
         }
 
+        /* --- NEW: Project External Links --- */
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem; /* Add some space above the tags */
+            margin-bottom: 1rem; /* Add space below if tags are after */
+            position: relative; /* Lifts this layer */
+            z-index: 1; /* Ensures links are on top of the card's ::before */
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            background-color: #e9ecef;
+            color: #495057;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: 1px solid #dee2e6;
+        }
+
+        .project-link:hover {
+            background-color: #dee2e6;
+            color: #2c3e50;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .project-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        /* --- END NEW STYLES --- */
+
         .tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
             margin-top: 1rem;
+            position: relative; /* Lifts this layer */
+            z-index: 1; /* Ensures tags are on top of the card's ::before */
         }
 
         .tag {
@@ -337,6 +380,8 @@
             text-align: center;
             margin-top: 1rem;
             margin-bottom: 1rem;
+            position: relative; /* Lifts this layer */
+            z-index: 1; /* Ensures thumbnails are on top of the card's ::before */
         }
 
         .certificate-image-container img {
@@ -727,6 +772,22 @@
                     <p class="card-description">
                         This project focuses on building an AI tool to help doctors detect pneumonia from chest X-rays. The notebook guides you through understanding the problem, exploring the data (including image manipulation), and building baseline machine learning models for classification. You'll learn about medical imaging, the nature of the dataset, and how to apply different classifiers to predict pneumonia.
                     </p>
+                    
+                    <!-- NEW: Project Links -->
+                    <div class="project-links">
+                        <a href="https://github.com/code2themoon/bio/blob/main/Aakriti_PneumoniaDetection_Section3.ipynb" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <!-- GitHub Icon SVG -->
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://colab.research.google.com/github/code2themoon/bio/blob/main/Aakriti_PneumoniaDetection_Section3.ipynb" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <!-- Google Colab Icon SVG -->
+                            <svg role="img" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><title>Google Colab</title><path d="M38,2H10C5.58,2,2,5.58,2,10V38c0,4.42,3.58,8,8,8H38c4.42,0,8-3.58,8-8V10C46,5.58,42.42,2,38,2z M24,34c-5.52,0-10-4.48-10-10s4.48-10,10-10s10,4.48,10,10S29.52,34,24,34z M35.45,15.11c-1.3-2.15-3.04-3.89-5.19-5.19c-2.15-1.3-4.54-1.92-7.07-1.92s-4.92,0.62-7.07,1.92c-2.15,1.3-3.89,3.04-5.19,5.19c-1.3,2.15-1.92,4.54-1.92,7.07s0.62,4.92,1.92,7.07c1.3,2.15,3.04,3.89,5.19,5.19c2.15,1.3,4.54,1.92,7.07,1.92s4.92-0.62,7.07-1.92c2.15-1.3,3.89-3.04,5.19-5.19c1.3-2.15,1.92-4.54,1.92-7.07S36.75,17.26,35.45,15.11z M24,30c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S27.31,30,24,30z"/></svg>
+                            <span>Google Colab</span>
+                        </a>
+                    </div>
+                    <!-- END NEW Links -->
+
                     <div class="tags">
                         <span class="tag">CNN</span>
                         <span class="tag">AI</span>
@@ -1244,5 +1305,6 @@
     </script>
 </body>
 </html>
+
 
 
